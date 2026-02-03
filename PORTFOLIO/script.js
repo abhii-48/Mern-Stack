@@ -2,6 +2,7 @@ const form =document.quesrySelector('#form');
 const name=document.querySelector('#name');
 const email=document.querySelector('#email');
 const password=document.querySelector('#password');
+const emailRegex= /.*?@?[^@]*\.+.*/
 
 
 form.addEventListener('submit', (e)=>{
@@ -17,6 +18,10 @@ form.addEventListener('submit', (e)=>{
     else if(!email.value.trim()){
         alert('Email is required');
     }
+
+   else if(!emailRegex.test(email.value.trim())){
+    alert('Please enter valid email');
+   }
     else if(!message.value.trim()){
         alert('You must add message to send it!');
     }

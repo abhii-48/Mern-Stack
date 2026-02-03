@@ -1,0 +1,127 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TODO-APP</title>
+    <style>
+        :root{--bg:#f4f6f8;--card:#fff;--accent:#2b6cb0;--muted:#6b7280}
+        *{box-sizing:border-box;font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif}
+        body{margin:0;background:var(--bg);padding:32px;display:flex;justify-content:center}
+        .todo-app{width:900px;max-width:100%}
+        
+        .header{background:var(--card);padding:18px;border-radius:8px;box-shadow:0 1px 3px rgba(2,6,23,.08);margin-bottom:16px}
+        .header h1{margin:0;font-size:20px;color:#111}
+        .input-row{display:flex;margin-top:12px;gap:8px}
+        .input-row input{flex:1;padding:10px 12px;border:1px solid #e5e7eb;border-radius:6px;font-size:14px}
+        .input-row button{background:var(--accent);color:#fff;border:none;padding:10px 16px;border-radius:6px;cursor:pointer}
+        .input-row button:active{transform:translateY(1px)}
+        /* Two div sections under the top div */
+        .cols{display:flex;gap:12px}
+        .col{flex:1;background:var(--card);padding:14px;border-radius:8px;min-height:220px;box-shadow:0 1px 3px rgba(2,6,23,.06)}
+        .col h2{margin:0 0 12px 0;font-size:16px;color:var(--muted)}
+        .list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px}
+        .item{display:flex;align-items:center;gap:10px;padding:8px;border-radius:6px;border:1px solid #f1f5f9}
+        .item .text{flex:1}
+        .item .text.done{text-decoration:line-through;color:#9ca3af}
+        .item button{background:transparent;border:none;color:var(--accent);cursor:pointer;padding:6px}
+        .small{font-size:13px;color:#9aa0a6}
+        .empty{color:#9aa0a6;font-size:14px;padding:8px}
+    </style>
+</head>
+<body>
+    <div class="todo-app">
+        <!-- top div section
+        <div class="header">
+            <h1>Simple TODO App</h1>
+            <div class="input-row">
+                <input id="todo-input" type="text" placeholder="Add a task and press Add or Enter" />
+                <button id="add-btn">Add</button>
+            </div>
+        </div>
+
+        <!-- two div sections under the top div -->
+        <div class="cols">
+            <div class="col" id="active-col">
+                <h2>Active Tasks</h2>
+                <ul id="active-list" class="list"></ul>
+                <div id="active-empty" class="empty">No active tasks</div>
+            </div>
+
+            <div class="col" id="completed-col">
+                <h2>Completed Tasks</h2>
+                <ul id="completed-list" class="list"></ul>
+                <div id="completed-empty" class="empty">No completed tasks</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const input = document.getElementById('todo-input');
+        const addBtn = document.getElementById('add-btn');
+        const activeList = document.getElementById('active-list');
+        const completedList = document.getElementById('completed-list');
+        const activeEmpty = document.getElementById('active-empty');
+        const completedEmpty = document.getElementById('completed-empty');
+
+        let todos = []; // {id, text, done}
+
+        function render() {
+            activeList.innerHTML = '';
+            completedList.innerHTML = '';
+            const active = todos.filter(t => !t.done);
+            const completed = todos.filter(t => t.done);
+
+            if (active.length === 0) activeEmpty.style.display = 'block'; else activeEmpty.style.display = 'none';
+            if (completed.length === 0) completedEmpty.style.display = 'block'; else completedEmpty.style.display = 'none';
+
+            active.forEach(t => activeList.appendChild(createItem(t)));
+            completed.forEach(t => completedList.appendChild(createItem(t)));
+        }
+
+        function createItem(todo) {
+            const li = document.createElement('li');
+            li.className = 'item';
+            const span = document.createElement('div');
+            span.className = 'text' + (todo.done ? ' done' : '');
+            span.textContent = todo.text;
+
+            const toggle = document.createElement('button');
+            toggle.textContent = todo.done ? 'Undo' : 'Done';
+            toggle.title = 'Toggle done';
+            toggle.onclick = () => {
+                todo.done = !todo.done;
+                render();
+            };
+
+            const del = document.createElement('button');
+            del.textContent = 'Delete';
+            del.title = 'Delete';
+            del.onclick = () => {
+                todos = todos.filter(t => t.id !== todo.id);
+                render();
+            };
+
+            li.appendChild(span);
+            li.appendChild(toggle);
+            li.appendChild(del);
+            return li;
+        }
+
+        function addTodo(text) {
+            const trimmed = text.trim();
+            if (!trimmed) return;
+            todos.push({id: Date.now(), text: trimmed, done: false});
+            input.value = '';
+            render();
+        }
+
+        addBtn.addEventListener('click', () => addTodo(input.value));
+        input.addEventListener('keydown', (e) => { if (e.key === 'Enter') addTodo(input.value); });
+
+        
+        render();
+    </script>
+</body>
+</html> -->
