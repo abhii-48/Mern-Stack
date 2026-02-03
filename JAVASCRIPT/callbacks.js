@@ -16,3 +16,12 @@ function user(cb){
 }
 user(greet);
 
+function getData(callback){
+    setTimeout( ()=>{
+        callback('Server data')
+    },4000);
+}
+
+getData(function(data){
+    console.log(data);
+})
