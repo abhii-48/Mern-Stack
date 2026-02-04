@@ -1,0 +1,14 @@
+JSON:->JAVASCRIPT OBJECT NOTATION
+{
+    name:"tom",
+    age:
+}
+
+//JSON
+{
+    "name":Tom,
+    "age":23
+}
+
+JSON.parse->string to JSON
+JSON stringify->JSON to string
