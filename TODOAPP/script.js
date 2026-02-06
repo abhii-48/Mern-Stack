@@ -98,67 +98,123 @@
 
 
 
-var todos = [];
+// var todos = [];
 
-var input = document.getElementById("todoInput");
-var list = document.getElementById("todoList");
-var countText = document.getElementById("count");
+// var input = document.getElementById("todoInput");
+// var list = document.getElementById("todoList");
+// var countText = document.getElementById("count");
 
-function addTodo() {
-    var task = input.value;
+// function addTodo() {
+//     var task = input.value;
 
-    if (task === "") {
-        alert("Please enter a task");
+//     if (task === "") {
+//         alert("Please enter a task");
+//         return;
+//     }
+
+//     todos.push(task);
+//     input.value = "";
+//     showTodos();
+// }
+
+
+// function showTodos() {
+//     list.innerHTML = "";
+
+//     for (var i = 0; i < todos.length; i++) {
+//         var li = document.createElement("li");
+
+//         var span = document.createElement("span");
+//         span.innerText = todos[i];
+
+//         var delBtn = document.createElement("button");
+//         delBtn.innerText = "Delete";
+//         delBtn.className = "delete";
+
+//         delBtn.onclick = function () {
+//             deleteTodo(this);
+//         };
+
+//         li.appendChild(span);
+//         li.appendChild(delBtn);
+//         list.appendChild(li);
+//     }
+
+//     countText.innerText = "Total Todos: " + todos.length;
+// }
+
+// function deleteTodo(button) {
+//     var li = button.parentElement;
+//     var text = li.firstChild.innerText;
+
+//     var index = todos.indexOf(text);
+//     todos.splice(index, 1);
+
+//     showTodos();
+// }
+
+// function filterTodos(type) {
+//     showTodos();
+// }
+
+
+// function clearAll() {
+//     todos = [];
+//     showTodos();
+// }
+
+
+
+
+const input = document.querySelector('#todoInput');
+const addBtn = document.querySelector('#addBtn');
+const list = document.querySelector('#todos');
+
+let todos = [];
+
+function saveTodos () {
+    localStorage.setItem('todos', JSON.stringify(todos));
+}
+
+function getTodos () {
+    const storedTodos = localStorage.getItem('todos');
+    if(storedTodos) {
+        todos = JSON.parse(storedTodos);
+    }
+}
+
+function renderTodos() {
+    list.innerHTML = '';
+    todos.forEach((todo, index )=> {
+        const li = document.createElement('li');
+        const p = document.createElement('p');
+        const deleteBtn = document.createElement('button');
+
+        p.innerText = todo;
+        deleteBtn.innerText = 'Delete'
+        deleteBtn.addEventListener('click', () => {
+            todos.splice(index, 1);
+            saveTodos();
+            renderTodos();
+            // li.remove();
+        })
+        li.append(p, deleteBtn);
+        list.append(li);
+        })
+}
+
+addBtn.addEventListener('click', () => {
+    const inputText = input.value.trim();
+    input.value = '';
+    if(!inputText) {
+        alert('Input field is required!');
         return;
     }
-
-    todos.push(task);
-    input.value = "";
-    showTodos();
-}
-
-
-function showTodos() {
-    list.innerHTML = "";
-
-    for (var i = 0; i < todos.length; i++) {
-        var li = document.createElement("li");
-
-        var span = document.createElement("span");
-        span.innerText = todos[i];
-
-        var delBtn = document.createElement("button");
-        delBtn.innerText = "Delete";
-        delBtn.className = "delete";
-
-        delBtn.onclick = function () {
-            deleteTodo(this);
-        };
-
-        li.appendChild(span);
-        li.appendChild(delBtn);
-        list.appendChild(li);
-    }
-
-    countText.innerText = "Total Todos: " + todos.length;
-}
-
-function deleteTodo(button) {
-    var li = button.parentElement;
-    var text = li.firstChild.innerText;
-
-    var index = todos.indexOf(text);
-    todos.splice(index, 1);
-
-    showTodos();
-}
-
-function filterTodos(type) {
-    showTodos();
-}
+    todos.push(inputText);
+    saveTodos();
+    renderTodos();   
+})
 
 
-function clearAll() {
-    todos = [];
-    showTodos();
-}
+getTodos();
+renderTodos();

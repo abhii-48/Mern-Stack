@@ -14,3 +14,4 @@ async function getData(){
     console.log('After Data')
 }
 getData();
+
